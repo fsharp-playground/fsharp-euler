@@ -53,3 +53,44 @@ let memoize f =
             let res = f x
             cache.[x] <- res
             res
+
+
+// test 
+#nowarn "40"  
+let __test() =
+
+    let rec fib = memoize(function
+      | 1 -> 1
+      | 2 -> 1
+      | n -> fib(n-1) + fib(n-2))
+
+    let fibs =
+        let rec fb n =
+            n |> printfn "%d"
+            seq {
+                yield fib n
+                yield! fb (n+1)
+            }
+        fb 2
+
+    let solution = fibs |> Seq.takeWhile((>=) 4000000 ) |> Seq.filter(fun fib -> fib % 2 = 0) |> Seq.sum
+    solution |> printfn "solution: %d"
+
+
+    fib 10 |> printfn "%d"
+    fib 11 |> printfn "%d"
+    fib 2 |> printfn "%d"
+
+
+    let _fibs = 
+        let rec fb n =
+            seq {
+                yield n
+                yield! fb (n + 1)
+            }
+        fb 1
+
+    // arithmetic operation resulted in an overflow
+    _fibs |> Seq.takeWhile( (>=) 10) |> Seq.sum |> printfn "%d"
+    _fibs |> Seq.takeWhile( (>=) 40000000) |> Seq.filter(fun fib -> fib % 2 = 0) |> Seq.sum |> printfn "%d"
+         

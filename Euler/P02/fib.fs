@@ -31,3 +31,5 @@ let solution = fibs |> Seq.takeWhile((>=) 4000000 ) |> Seq.filter(fun fib -> fib
 solution |> printfn "solution: %d"
 
 Console.ReadKey(true) |> ignore
+
+

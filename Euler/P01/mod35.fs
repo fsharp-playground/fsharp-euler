@@ -17,3 +17,8 @@ let problem1 =
 
 printfn "solution: %d" problem1
 Console.ReadKey(true) |> ignore
+
+
+let p1 = seq {1..99} |> Seq.filter (fun x -> x % 3 = 0 || x % 5 = 0) |> Seq.sum
+printfn "solution: %d" p1
+
